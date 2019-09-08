@@ -18,28 +18,30 @@ Implements the Flux pattern:
 ```
 
 import { Component } from 'supercapacitor'
-// Store full path to file based on root
-import { SomethingStore } from './routes/something/stores/something_store'
+import { SomethingStore } from './stores/something_store'
 
 export default class Index extends Component {
 
     constructor(props){
         super(props)
-        this.something = 'class variable'
 
-        // this is how you init state in ES6
         this.state = {}
         
         // The event method will register an event for the componentDidMount and the
         // componentWillUnmount
         
         // Listen for the emit from the store on a successful ajax call
+        // The `this.connect()` call will take care of the Pub/Sub's on and off listeners during react's mounting and
+        // unmounting lifecyles automatically.
+        // If the 3rd param is not given a function the component's own setState() will be used instead.
+        // this.connect(SomethingStore, 'getSomething.success')
+        // OR
+        // If the the 3rd param is a function, then the return data from the store will populate the
+        // callback's first param.
         // Name the listening method by the name of the emit prefixed with
         // "on" and suffixed with Success. This is just a convention, not a requirement.
-        // The even call will take care of the Pub/Sub's on and off listeners during react's mounting and
-        // unmounting lifecyles.
-        If the 3rd param is not given a value the component's own setState() will be used instead.
-        this.event('SomethingStore', 'getSomething.success', this.onGetSomethingSuccess.bind())
+        this.connect(SomethingStore, 'getSomething.success', this.onGetSomethingSuccess.bind(this))
+        
     }
 
     // Only use DidMount, ie not WillMount
@@ -50,13 +52,16 @@ export default class Index extends Component {
        // super here otherwise events will not be registered to listen 
        super.componentDidMount()
 
-        // Calls to a store
+        // Calls to a store to get data. Notice there is no return value here.
+        // The return value will come in the first param of the `this.event` callback ie,
+        // onGetSomethingSuccess: function(/* here -> */ data), or if a callback is not set,
+        // this component will re-render with the data populated in `this.state`
         SomethingStore.getSomething({
             'something_id': this.props.params.something_id
         })
     }
 
-    // The listener bound function will usually update the state which forces a re-render
+    // The callback bound function will usually update the state which forces a re-render
     onGetSomethingSuccess: function(data) {
         this.setState({
             something: data.something
@@ -64,7 +69,7 @@ export default class Index extends Component {
     }
 
     render() {
-        return {...stuff...}
+        return <div>{this.state.something}</div>
     }
 
 }
@@ -83,16 +88,28 @@ class SomethingStore extends Store {
         super('somethings.stores.something')
     }
 
-    getSomething(post_data){
-        this.post('/some/endpoint', post_data)
-        .then((data) => {
+    getSomething(options={}){
+        // To keep the simplicity of the flux pattern, we do not dispatch TO the store.
+        // This eliminates "action.js" files that loses context as to the resources
+        // they are acting upon. We simply call a store's method.
+        // Due to this flexibility we are leaving it up to the developer to NOT RETURN FROM THIS METHOD!
+        // But simply emit back to listening controllers.
+        
+        // This first option is all one needs to get data.
+        // The data will be set to the store's state, and the 'getSomething.success' will be emitted.
+        this.request('get', `/some/endpoint/${options.something_id}`, 'getSomething.success')
+        
+        OR for more control use:
+        
+        this.get(`/some/endpoint/${options.something_id}`)
+        .then((response) => {
             // !!! ONLY CALL EMITS!!! or call another store method
             // Name the emit via the store method name and add .success
             // Pass the data as the second param which transcribes to the first
             // param of the listening functions.
-            this.emit('getSomething.success', data)
+            this.emit('getSomething.success', response.data)
 
-            // Or set the data to the store's state via this.setState(data)
+            // Or set the data to the store's state via this.setState(response.data)
             // It can later be used by components by calling SomethingStore.getState()
             // Still send an emit, though.
             // Just remember that stores are singletons. There is only one instance
@@ -108,6 +125,56 @@ class SomethingStore extends Store {
 // The "new" creates a "singleton" for the app
 // that allows it to share data from
 // file to file via SomethingStore = require('file/path')
+export default new SomethingStore()
+
+```
+
+### Simplest example
+
+#### Simplest Component example
+```
+
+import { Component } from 'supercapacitor'
+import SomethingStore from './stores/something_store'
+
+export default class Index extends Component {
+
+    constructor(props){
+        super(props)
+        this.state = {something: null}
+        this.connect(SomethingStore, 'getSomething.success')
+    }
+
+    componentDidMount() {
+       super.componentDidMount()
+       SomethingStore.getSomething({
+           'something_id': this.props.params.something_id
+       })
+    }
+
+    render() {
+        return <div>{this.state.something}</div>
+    }
+
+}
+```
+
+### Simplest Store example
+```
+
+import { Store } from 'supercapacitor'
+
+class SomethingStore extends Store {
+
+    constructor() {
+        super('somethings.stores.something')
+    }
+
+    getSomething(options={}) {
+        this.request('get', `/some/endpoint/${options.something_id}`, 'getSomething.success')
+    }
+}
+
 export default new SomethingStore()
 
 ```
