@@ -1,5 +1,7 @@
 # Supercapacitor
 
+![Supercapacitor](https://github.com/jzumbrun/supercapacitor-app/blob/master/public/assets/images/logo.svg?sanitize=1)
+
 Supercapacitor is a super simplified implementation of the flux pattern.
 Its goal is to encourage Pub/Sub patterns and include a XHR managing library.
 
