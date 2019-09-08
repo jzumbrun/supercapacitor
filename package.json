@@ -1,6 +1,6 @@
 {
   "name": "supercapacitor",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Flux inspired data retrieval and storage for react.",
   "main": "./dist/supercapacitor.js",
   "repository": {
