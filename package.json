@@ -1,10 +1,11 @@
 {
   "name": "supercapacitor",
-  "version": "0.1.15",
+  "version": "0.2.0",
   "description": "Flux inspired data retrieval and storage for react.",
   "main": "./dist/supercapacitor.js",
-  "directories": {
-    "lib": "lib"
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jzumbrun/supercapacitor.git"
   },
   "scripts": {
     "test": "mocha --require @babel/register"
