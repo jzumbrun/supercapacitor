@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios/dist/axios.min'
 import Event from './event'
 import State from './state'
 import Doh from './doh'

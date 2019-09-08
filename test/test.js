@@ -1,4 +1,5 @@
 const assert = require('assert'),
+    axios = require('axios/dist/axios.min'),
     util = require('../src/util'),
     SC = require('../supercapacitor')
 
@@ -41,5 +42,11 @@ describe('Store', function() {
         }
         let testing = new Testing()
         assert(testing.getState)
+    })
+})
+
+describe('axios', function() {
+    it('should be a function', function() {
+        assert(typeof axios.post == 'function')
     })
 })
