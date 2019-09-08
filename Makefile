@@ -3,20 +3,21 @@ help:
 	@echo "Welcome to supercapacitor's build command center"
 	@echo "----------------------------------------"
 	@echo ""
-	@echo "help             Show this list"
-	@echo "install          Install locally"
-	@echo "pack             Pack the client for production"
-	@echo "pack-dev         Pack the client for development and watch files"
-	@echo "stop-pack-dev    Stop all webpack services"
-	@echo "start-vagrant    Start vagrant"
-	@echo "stop-vagrant     Stop vagrant"
+	@echo "help             Show this list."
+	@echo "install          Install locally."
+	@echo "pack             Pack the client for production."
+	@echo "pack-dev         Pack the client for development and watch files."
+	@echo "stop-pack-dev    Stop all webpack services."
+	@echo "start-vagrant    Start vagrant."
+	@echo "stop-vagrant     Stop vagrant."
 	@echo "restart-dev      Restart the dev server."
-	@echo "show-status      Show pm2 status"
+	@echo "show-status      Show pm2 status."
 	@echo "show-logs        Show server logs."
 	@echo "clear-logs       Clear all server logs."
-	@echo "start-dev        Start the dev server, webpack"
+	@echo "start-dev        Start the dev server, webpack."
 	@echo "stop-dev         Stop the dev server."
 	@echo "commit           Pack and commit codez to repo."
+	@echo "update           Update supercapacitor module."
 	@echo ""
 	@echo "----------------------------------------"
 	@echo "To get started run: make start-dev"
@@ -72,3 +73,7 @@ stop-dev: stop-domain stop-vagrant stop-pack-dev clear-logs
 commit: pack
 	@git commit -am "$(mess)"
 	@git push
+
+update:
+	@cd ./client && npm install --save supercapacitor
+	@make pack-dev
