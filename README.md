@@ -3,9 +3,18 @@
 ![Supercapacitor](https://github.com/jzumbrun/supercapacitor-app/blob/master/public/assets/images/logo.svg?sanitize=1)
 
 Supercapacitor is a super simplified implementation of the flux pattern.
-Its goal is to encourage Pub/Sub patterns and include a XHR managing library.
+Its goal is to implement a super simple and very flexible unidirectional data flow.
 
 Visit [Supercapacitor App](https://github.com/jzumbrun/supercapacitor-app) for an full example app.
+
+#### Third party libraries used:
+react - for UI management (as a peer dependency)
+tiny-emitter - for pub/sub event management
+axios - for fetching server data
+
+### TODO
+Possibly provide a version without axios or with a customizable fetcher.
+
 #### Examples
 
 ## Component -> Stores Communication
@@ -16,7 +25,7 @@ Implements the Flux pattern:
 Note: the action dispatcher has been replace in favor of good old class method calls to simplify the pattern.
 
 ## Why?
-I wanted to make the simplest version of a unidirectional react data store implementation that can fetch data from the server and inform components of the update. One that is clean, easy to follow and has no foreign concepts.
+I wanted to make the simplest version of a unidirectional react data store implementation that can fetch data from the server, (using axios), and inform components of the update. One that is clean, easy to follow and has no foreign concepts.
 
 ## What about hooks? Are you bucking the hooks gooey goodness?
 I love using BOTH classes and functional components. I think classes are clean and easy to organize complex logic and I think functional components are great for simple logic-less components that only use props. I like to keep ALL state out of functional components if possible. This helps me create a better mental model as to what the component's purpose is.
