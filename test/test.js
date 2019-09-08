@@ -1,5 +1,5 @@
 const assert = require('assert'),
-    axios = require('axios/dist/axios.min'),
+    axios = require('axios'),
     util = require('../src/util'),
     SC = require('../supercapacitor')
 

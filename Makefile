@@ -20,12 +20,12 @@ install:
 
 pack/publish:
 	@echo 'Packing production...'
-	@webpack --env=production
+	@webpack --mode=production
 	@npm publish
 
 pack/dev:
 	@echo 'Packing development...'
-	@webpack --env=development -w
+	@webpack --mode=development -w
 
 code/test:
 	@mocha --require @babel/register
