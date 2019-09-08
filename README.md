@@ -53,7 +53,7 @@ export default class Index extends Component {
        super.componentDidMount()
 
         // Calls to a store to get data. Notice there is no return value here.
-        // The return value will come in the first param of the `this.event` callback ie,
+        // The return value will come in the first param of the `this.connect` callback ie,
         // onGetSomethingSuccess: function(/* here -> */ data), or if a callback is not set,
         // this component will re-render with the data populated in `this.state`
         SomethingStore.getSomething({

@@ -5,7 +5,7 @@ export default class Component extends React.Component{
 
     constructor(props){
         super(props)
-        this.events = []
+        this.connections = []
         this.loading = []
     }
 
@@ -14,14 +14,14 @@ export default class Component extends React.Component{
     }
     
     componentDidMount() {
-        each(this.events, (event) => event[0].on(event[1], (this[event[2]] && this[event[2]].bind(this)) || this.defaultCallback.bind(this)))
+        each(this.connections, (connection) => connection[0].on(connection[1], (this[connection[2]] && this[connection[2]].bind(this)) || this.defaultCallback.bind(this)))
     }
 
     componentWillUnmount() {
-        each(this.events, (event) => event[0].off(event[1], (this[event[2]] && this[event[2]].bind(this)) || this.defaultCallback.bind(this)))
+        each(this.connections, (connection) => connection[0].off(connection[1], (this[connection[2]] && this[connection[2]].bind(this)) || this.defaultCallback.bind(this)))
     }
 
-    event(klass, name, callback) {
-        this.events.push([klass, name, callback])
+    connect(klass, name, callback) {
+        this.connections.push([klass, name, callback])
     }
 }
