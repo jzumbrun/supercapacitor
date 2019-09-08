@@ -1,6 +1,6 @@
 {
   "name": "supercapacitor",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Flux inspired data retrieval and storage for react.",
   "main": "./dist/supercapacitor.js",
   "repository": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0",
-    "tiny-emitter": "^2.2.0"
+    "tiny-emitter": "^2.1.0"
   },
   "peerDependencies": {
     "react": ">=15.0.0"
