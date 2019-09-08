@@ -3,6 +3,7 @@
 Supercapacitor is a super simplified implementation of the flux pattern.
 Its goal is to encourage Pub/Sub patterns and include a XHR managing library.
 
+Visit [Supercapacitor App](https://github.com/jzumbrun/supercapacitor-app) for an full example app.
 #### Examples
 
 ## Component -> Stores Communication
@@ -18,7 +19,7 @@ import { Component } from 'supercapacitor'
 // Store full path to file based on root
 import { SomethingStore } from './routes/something/stores/something_store'
 
-module.exports = class Index extends Component {
+export default class Index extends Component {
 
     constructor(props){
         super(props)
@@ -72,7 +73,7 @@ module.exports = class Index extends Component {
 
 import { Store } from 'supercapacitor'
 
-module.exports = class SomethingStore extends Store {
+class SomethingStore extends Store {
 
     constructor(){
         // The namespace ensures the emits are globally namespaced
@@ -105,6 +106,6 @@ module.exports = class SomethingStore extends Store {
 // The "new" creates a "singleton" for the app
 // that allows it to share data from
 // file to file via SomethingStore = require('file/path')
-module.exports = new SomethingStore()
+export default new SomethingStore()
 
 ```
